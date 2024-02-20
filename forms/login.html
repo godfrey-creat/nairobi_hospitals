@@ -1,0 +1,67 @@
+{% extends 'forms/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>You can always contact us at any time of the day through our contact details provided. You can reach us through calls, whatsapp, email or through our website forms for any question and suggestions.</p>
+        </div>
+
+      </div>
+
+      <div class="container">
+
+          <div class="col-lg-6">
+            {{msg}}
+            <form method="POST" action="{{ url_for('login_route') }}" role="form" >
+                {{msg}}
+              <div class="form-group mt-3">
+                <label for="email">Email:</label>
+                {{ form.email(class="form-control") }}
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="login_as">Log in as:</label>
+                {{ form.login_as(class="form-control") }}
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="password">Password:</label>
+                {{ form.password(class="form-control") }}
+              </div>
+              <div class="form-group mt-3">
+                <button class="btn btn-primary" type="submit">Login</button>
+                <a href="/user_registration">Register as user</a>
+                <a href="/hospital_registration">Register as hospital</a>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+{% endblock %}
+    <h1>Login</h1>
+    {{msg}}
+    <form method="POST" action="{{ url_for('login_route') }}">
+        {{ form.hidden_tag() }}
+        <label for="email">Eamil:</label>
+        {{ form.email(class="form-control") }}
+        <label for="login_as">Login As:</label>
+        {{ form.login_as(class="form-control") }}
+        <label for="password">Password:</label>
+        {{ form.password(class="form-control") }}
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>

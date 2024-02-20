@@ -1,0 +1,59 @@
+{% extends 'forms/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+      </div>
+
+      <div class="container">
+
+          <div class="col-lg-6">
+            {{msg}}
+            <form method="POST" action="/user_registration" role="form" class="php-email-forms">
+                <div class="form-group mt-3">
+                    <label for="first_name">First Name</label>
+                    {{ form.first_name(class="form-control") }}
+                </div>
+
+                <div class="form-group mt-3">
+                <label for="last_name">Last Name</label>
+                {{ form.last_name(class="form-control") }}
+                </div>
+
+              <div class="form-group mt-3">
+                <label for="email">Email:</label>
+                {{ form.email(class="form-control") }}
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="password">Password:</label>
+                {{ form.password(class="form-control") }}
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="confirm_password">Confirm Password:</label>
+                {{ form.confirm_password(class="form-control") }}
+              </div>
+              <div class="form-group mt-3">
+                <button type="submit">Register</button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'forms/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+        <h3>Users</h3>
+    <table class="table table-dark table-striped">
+        <thead>
+        <!-- <tr>
+            <th scope="col">Created_at</th>
+            <th scope="col">firstName</th>
+            <th scope="col">lastName</th>
+            <th scope="col">Email</th>
+        </tr> -->
+        </thead>
+        {% if not users%}
+        <div class="text-center">
+            <h3 class="my-5">No Records to Display!</h3>
+        </div>
+        {% else %}
+        <tbody>
+        {% for data in users %}
+        <tr>
+            <th scope="row">{{data.created_at}}</th>
+            <td>{{data.first_name}}</td>
+            <td>{{data.last_name}}</td>
+            <td>{{data.email}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+</div>
+
+<div class="container">
+        <h3>Hospitals</h3>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th  data-sortable="true" data-sorter="alphanum" scope="col">Created_at</th>
+            <th scope="col">Hospital Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Email</th>
+            <th scope="col">Book</th>
+        </tr>
+        </thead>
+        {% if not hospitals%}
+        <div class="text-center">
+            <h3 class="my-5">No Records to Display!</h3>
+        </div>
+        {% else %}
+        <tbody>
+        {% for data in hospitals %}
+        <tr>
+            <th scope="row">{{data.created_at}}</th>
+            <td>{{data.hospitalname}}</td>
+            <td>{{data.location}}</td>
+            <td>{{data.email}}</td>
+            <td><button class="btn btn-success"><a href="#">Book Now</a></button></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

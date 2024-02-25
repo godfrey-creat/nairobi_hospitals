@@ -89,6 +89,7 @@ def login_route():
 @app.route('/Hospital_registration', methods=['GET', 'POST'])
 def Hospital_registration():
     form = HospitalRegistrationForm()
+    print('form avaailble')
     if request.method == 'POST':
         hospitalname = form.hospitalname.data
         service_type = form.service_type.data
@@ -116,7 +117,7 @@ def Hospital_registration():
         db.session.add(new_hospital)
         db.session.commit()
 
-        return redirect(url_for('login_route'))
+        return redirect(url_for('login_route',msg='Registration successful, continue to log in'))
 
     return render_template('forms/hospital.html', form=form)
 

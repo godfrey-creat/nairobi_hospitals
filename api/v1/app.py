@@ -2,6 +2,7 @@
 '''Contains a Flask web application API.'''
 
 import os
+import csv
 from flask import Flask, jsonify
 from flask_cors import CORS
 
@@ -152,20 +153,33 @@ def user_registration():
     return render_template('forms/user.html', form=form)
 
 
+@app.route('/hospitals_list')
+def hospitals_list():
+    csv_file_path = 'forms/hospitals_list.csv'
+
+    # Read the CSV file
+    with open(csv_file_path, 'r') as file:
+        csv_reader = csv.reader(file)
+        data = list(csv_reader)
+
+    # Pass the data to the template for rendering
+    return render_template('hospitals_list.html', data=data)
+
 #@app.route('/hospitals_list', methods=['GET', 'POST'])
 #def hospitals_list():
  #   file_path = '/forms/hospitals_list.csv'
   #  return send_file(file_path, as_attachment=True)
 
-@app.route('/hospitals_list', methods=['GET', 'POST'])
-def hospitals_list():
-    hospitals_list = ('/forms/hospitals_list.csv')
-    return hospitals_list
+#@app.route('/hospitals_list', methods=['GET', 'POST'])
+#def hospitals_list():
+ #   hospitals_list = ('/forms/hospitals_list.csv')
+  #  return hospitals_list
 
 @app.route('/booking', methods=['GET', 'POST'])
 # @login_required
 def booking():
     hospitals= Hospital.query.all()
     return render_template('home.html',hospitals=hospitals)
+if __name__ == '__main__':                            app.run(debug=True)
 # if __name__ == '__main__':
 #     db.create_all()

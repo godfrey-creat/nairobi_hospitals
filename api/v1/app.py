@@ -154,7 +154,7 @@ def user_registration():
 
 @app.route('/hospitals_list', methods=['GET', 'POST'])
 def hospitals_list():
-    file_path = 'forms/hospitals_list.csv'
+    file_path = '/api/v1/forms/hospitals_list.csv'
     return send_file(file_path, as_attachment=True)
 
 #@app.route('/hospitals_list', methods=['GET', 'POST'])

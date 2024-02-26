@@ -154,7 +154,7 @@ def user_registration():
 
 @app.route('/hospitals_list', methods=['GET', 'POST'])
 def hospitals_list():
-    hospitals_list = ('forms/hospitals_list.csv')
+    hospitals_list = url_for('forms/hospitals_list.csv')
     return hospitals_list
 
 @app.route('/booking', methods=['GET', 'POST'])

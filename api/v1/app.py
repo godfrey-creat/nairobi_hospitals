@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 # from api.v1.views import app_views
 from flask import Flask,render_template,redirect,url_for,request
-from forms.form import LoginForm, HospitalRegistrationForm, UserRegistrationForm
+from forms.forms import LoginForm, HospitalRegistrationForm, UserRegistrationForm
 from models.models import User, Hospital, db
 from flask_bcrypt import bcrypt
 from flask_bcrypt import Bcrypt

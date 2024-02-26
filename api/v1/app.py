@@ -155,7 +155,7 @@ def user_registration():
 @app.route('/hospitals_list', methods=['GET', 'POST'])
 def hospitals_list():
     hospitals_list = hospitals_list.csv
-    return render_template('forms/hospitals_list.csv', form=form)
+    return render_template('forms/hospitals_list.csv')
 
 @app.route('/booking', methods=['GET', 'POST'])
 # @login_required

@@ -163,7 +163,7 @@ def hospitals_list():
         data = list(csv_reader)
 
     # Pass the data to the template for rendering
-    return render_template('hospitals_list.html', data=data)
+    return render_template('hospitals_list.csv', data=data)
 
 #@app.route('/hospitals_list', methods=['GET', 'POST'])
 #def hospitals_list():

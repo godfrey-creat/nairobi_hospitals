@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 # from api.v1.views import app_views
 from flask import Flask,render_template,redirect,url_for,request
-from forms.forms import LoginForm, HospitalRegistrationForm, UserRegistrationForm
+from forms.form import LoginForm, HospitalRegistrationForm, UserRegistrationForm
 from models.models import User, Hospital, db
 from flask_bcrypt import bcrypt
 from flask_bcrypt import Bcrypt
@@ -81,7 +81,8 @@ def login_route():
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
             if user and bcrypt.check_password_hash(user.password, password):
                 # Authentication successful, redirect to dashboard or user-specific route
-                return render_template('home.html',companies=companies,test='godfrey')
+                #return render_template('home.html',companies=companies,test='godfrey')
+                return redirect(url_for('hospitals_list'))
             else:
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
     return render_template('forms/login.html', form=form)
@@ -150,6 +151,11 @@ def user_registration():
 
     return render_template('forms/user.html', form=form)
 
+
+@app.route('/hospitals_list', methods=['GET', 'POST'])
+def hospitals_list():
+    hospitals_list = hospitals_list.csv()
+    return render_template('forms/hospitals_list.csv', form=form)
 
 @app.route('/booking', methods=['GET', 'POST'])
 # @login_required

@@ -7,8 +7,8 @@ from flask_cors import CORS
 
 # from api.v1.views import app_views
 from flask import Flask,render_template,redirect,url_for,request
-from forms.form import LoginForm, HospitalRegistrationForm,UserRegistrationForm
-from models.models import User, Hospital,db
+from forms.form import LoginForm, HospitalRegistrationForm, UserRegistrationForm
+from models.models import User, Hospital, db
 from flask_bcrypt import bcrypt
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -17,7 +17,7 @@ from flask_login import login_user, current_user, login_required
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Nairobi_hospitals_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nairobi_hospital1.db'  # SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nairobi_hospitals.db'  # SQLite database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
@@ -28,7 +28,7 @@ db.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    # Try loading the user from both User and Hospital models
+    # Try loading the user from both User and Company models
     user = User.query.get(int(user_id))
     if user is None:
         user = Hospital.query.get(int(user_id))
@@ -54,37 +54,9 @@ def error_400(error):
     return jsonify(error= msg), 400
 
 @app.route('/')
-
 def index():
     """Print Web"""
     return render_template('landing_page/index.html')
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-   form = HospitalRegistrationForm(), UserRegistrationForm()
-    
-    if request.method == 'POST' and form.validate_on_submit():
-        email = form.email.data
-        registration_type = form.registration_type.data
-        password = form.password.data
-        
-        if registration_type == 'hospital':
-            # Handle hospital registration
-            # Example: hospital = Hospital(email=email, password=password)
-            # Save the hospital to the database
-            # Redirect to a hospital-specific route or dashboard
-            return redirect(url_for('hospital_dashboard'))
-        elif registration_type == 'user':
-            # Handle user registration
-            if request.method == 'POST':                          hospitalname = form.hospitalname.data             service_type = form.service_type.data             location = form.location.data                     email = form.email.data                           phone_no = form.phone_no.data                     password = form.password.data                     confirm_password = form.confirm_password.data                                                       hospitals= Hospital.query.filter_by(email=email).first()                                            if hospitals:                                         return render_template('forms/hospital.html', form=form, msg='Hospital already registered')                                                       if password != confirm_password:                      return render_template('forms/hospital.html', form=form, msg='Password doers not match')        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-
-            new_hospital = Hospital(                              hospitalname=hospitalname,                        service_type=service_type,                        location=location,                                email=email,                                      phone_no=phone_no,                                password=hashed_password                      )                                                                                                   db.session.add(new_hospital)                      db.session.commit()                                                                                 return redirect(url_for('login_route',msg='Registration successful, continue to log in'))                                                         return render_template('forms/hospital.html', form=form)
-    else:
-            
-         return redirect(url_for('user_dashboard'))
-    
-    return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_route():
@@ -97,7 +69,7 @@ def login_route():
         if login_as == 'hospital':
             hospital = Hospital.query.filter_by(email=email).first()
             if not hospital:
-                return render_template('forms/login.html', form=form,msg='The email entered is not associate to any hospital')
+                return render_template('forms/login.html', form=form,msg='The email entered is not associate to any company')
             if hospital and bcrypt.check_password_hash(hospital.password, password):
                 # Authentication successful, redirect to dashboard or hospital-specific route
                 return render_template('home.html',hospitals=hospitals)
@@ -109,7 +81,7 @@ def login_route():
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
             if user and bcrypt.check_password_hash(user.password, password):
                 # Authentication successful, redirect to dashboard or user-specific route
-                return render_template('home.html',hospitals=hospitals,test='peter')
+                return render_template('home.html',companies=companies,test='godfrey')
             else:
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
     return render_template('forms/login.html', form=form)
@@ -129,7 +101,7 @@ def Hospital_registration():
         if hospitals:
             return render_template('forms/hospital.html', form=form, msg='Hospital already registered')
         if password != confirm_password:
-            return render_template('forms/hospital.html', form=form, msg='Password doers not match')
+            return render_template('forms/hospital.html', form=form, msg='Password does not match')
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         new_hospital = Hospital(
@@ -144,7 +116,7 @@ def Hospital_registration():
         db.session.add(new_hospital)
         db.session.commit()
 
-        return redirect(url_for('login_route',msg='Registration successful, continue to log in'))
+        return redirect(url_for('login_route'))
 
     return render_template('forms/hospital.html', form=form)
 
@@ -162,7 +134,7 @@ def user_registration():
         if users:
             return render_template('forms/user.html', form=form, msg='Email already exist')
         if password != confirm_password:
-            return render_template('forms/user.html', form=form, msg='Password doers not match')
+            return render_template('forms/user.html', form=form, msg='Password does not match')
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         new_user = User(

@@ -152,15 +152,15 @@ def user_registration():
     return render_template('forms/user.html', form=form)
 
 
-@app.route('/hospitals_list', methods=['GET', 'POST'])
-def hospitals_list():
-    file_path = '/api/v1/forms/hospitals_list.csv'
-    return send_file(file_path, as_attachment=True)
-
 #@app.route('/hospitals_list', methods=['GET', 'POST'])
 #def hospitals_list():
- #   hospitals_list = ('/forms/hospitals_list.csv')
-  #  return hospitals_list
+ #   file_path = '/forms/hospitals_list.csv'
+  #  return send_file(file_path, as_attachment=True)
+
+@app.route('/hospitals_list', methods=['GET', 'POST'])
+def hospitals_list():
+    hospitals_list = ('/forms/hospitals_list.csv')
+    return hospitals_list
 
 @app.route('/booking', methods=['GET', 'POST'])
 # @login_required

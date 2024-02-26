@@ -6,7 +6,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 # from api.v1.views import app_views
-from flask import Flask,render_template,redirect,url_for,request
+from flask import Flask,render_template,redirect,url_for,request, send_file
 from forms.form import LoginForm, HospitalRegistrationForm, UserRegistrationForm
 from models.models import User, Hospital, db
 from flask_bcrypt import bcrypt
@@ -154,8 +154,13 @@ def user_registration():
 
 @app.route('/hospitals_list', methods=['GET', 'POST'])
 def hospitals_list():
-    hospitals_list = ('/forms/hospitals_list.csv')
-    return hospitals_list
+    file_path = 'forms/hospitals_list.csv'
+    return send_file(file_path, as_attachment=True)
+
+#@app.route('/hospitals_list', methods=['GET', 'POST'])
+#def hospitals_list():
+ #   hospitals_list = ('/forms/hospitals_list.csv')
+  #  return hospitals_list
 
 @app.route('/booking', methods=['GET', 'POST'])
 # @login_required

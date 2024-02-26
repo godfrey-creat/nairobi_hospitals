@@ -89,7 +89,6 @@ def login_route():
 @app.route('/Hospital_registration', methods=['GET', 'POST'])
 def Hospital_registration():
     form = HospitalRegistrationForm()
-    print('form avaailble')
     if request.method == 'POST':
         hospitalname = form.hospitalname.data
         service_type = form.service_type.data

@@ -10,7 +10,7 @@
 
         <div class="section-title">
           <h2>Contact</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>Welcome to register your hospital for easy accessibility.</p>
         </div>
 
       </div>
@@ -67,26 +67,3 @@
 
   </main><!-- End #main -->
   {% endblock %}
-
-    <h1>Registration</h1>
-    <h4>{{msg}}</h4>
-    <form method="POST" action="{{ url_for('Hospital_registration') }}">
-        {{ form.hidden_tag() }}
-        <label for="hospitalname">Hospital Name:</label>
-        {{ form.hospitalname(class="form-control") }}
-        <label for="service_type">Service Type:</label>
-        {{ form.service_type(class="form-control") }}
-        <label for="location">Location:</label>
-        {{ form.location(class="form-control") }}
-        <label for="email">Email:</label>
-        {{ form.email(class="form-control") }}
-        <label for="phone_no">Phone No:</label>
-        {{ form.phone_no(class="form-control") }}
-        <label for="password">Password:</label>
-        {{ form.password(class="form-control") }}
-        <label for="confirm_password">Confirm Password:</label>
-        {{ form.confirm_password(class="form-control") }}
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>

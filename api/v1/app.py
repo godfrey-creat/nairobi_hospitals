@@ -80,9 +80,9 @@ def register():
             if request.method == 'POST':                          hospitalname = form.hospitalname.data             service_type = form.service_type.data             location = form.location.data                     email = form.email.data                           phone_no = form.phone_no.data                     password = form.password.data                     confirm_password = form.confirm_password.data                                                       hospitals= Hospital.query.filter_by(email=email).first()                                            if hospitals:                                         return render_template('forms/hospital.html', form=form, msg='Hospital already registered')                                                       if password != confirm_password:                      return render_template('forms/hospital.html', form=form, msg='Password doers not match')        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
             new_hospital = Hospital(                              hospitalname=hospitalname,                        service_type=service_type,                        location=location,                                email=email,                                      phone_no=phone_no,                                password=hashed_password                      )                                                                                                   db.session.add(new_hospital)                      db.session.commit()                                                                                 return redirect(url_for('login_route',msg='Registration successful, continue to log in'))                                                         return render_template('forms/hospital.html', form=form)
-        else:
+    else:
             
-            return redirect(url_for('user_dashboard'))
+         return redirect(url_for('user_dashboard'))
     
     return render_template('register.html', form=form)
 

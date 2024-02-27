@@ -91,7 +91,6 @@ def login_route():
 @app.route('/Hospital_registration', methods=['GET', 'POST'])
 def Hospital_registration():
     form = HospitalRegistrationForm()
-    print('form avaailable')
     if request.method == 'POST':
         hospitalname = form.hospitalname.data
         service_type = form.service_type.data
@@ -135,9 +134,9 @@ def user_registration():
         confirm_password=form.confirm_password.data
         users= User.query.filter_by(email=email).first()
         if users:
-            return render_template('forms/user.html', form=form, msg='Email already exist')
+            return render_template('forms/user_reg.html', form=form, msg='Email already exist')
         if password != confirm_password:
-            return render_template('forms/user.html', form=form, msg='Password does not match')
+            return render_template('forms/user_reg.html', form=form, msg='Password does not match')
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         new_user = User(
@@ -151,7 +150,7 @@ def user_registration():
         db.session.commit()
         return redirect(url_for('login_route',msg='Registration successful, continue to log in'))
 
-    return render_template('forms/user.html', form=form)
+    return render_template('forms/user_reg.html', form=form)
 
 
 #@app.route('/hospitals_list')

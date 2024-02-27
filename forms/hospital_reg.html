@@ -1,0 +1,73 @@
+{% extends 'forms/base.html' %}
+{% block title %}Hospital Registration{% endblock %}
+
+{% block content %}
+    <!-- ======= Hospital Registration Section ======= -->
+    <section id="hospital-registration" class="hospital-registration">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Hospital Registration</h2>
+                <p>Welcome to Nairobi Health Society.</p>
+            </div>
+
+        </div>
+
+        <div class="container">
+
+            <div class="col-lg-6">
+                {{msg}}
+                <form method="POST" action="/hospital_registration" role="form" class="php-email-forms">
+                    <div class="form-group mt-3">
+                        <label for="hospital_name">Hospital Name</label>
+                        {{ form.hospital_name(class="form-control") }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="location">Location</label>
+                        {{ form.location(class="form-control") }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="service_type">Service Type</label>
+                        {{ form.service_type(class="form-control") }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="phone_no">Phone Number</label>
+                        {{ form.phone_no(class="form-control") }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="email">Email:</label>
+                        {{ form.email(class="form-control") }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="password">Password:</label>
+                        {{ form.password(class="form-control") }}
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="confirm_password">Confirm Password:</label>
+                        {{ form.confirm_password(class="form-control") }}
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </section><!-- End Hospital Registration Section -->
+
+    <!-- Redirect to login form after successful registration -->
+    <script>
+        {% if registration_successful %}
+            window.location.href = "/login";
+        {% endif %}
+    </script>
+
+{% endblock %}
+

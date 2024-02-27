@@ -91,6 +91,7 @@ def login_route():
 @app.route('/Hospital_registration', methods=['GET', 'POST'])
 def Hospital_registration():
     form = HospitalRegistrationForm()
+    print('form avaailable')
     if request.method == 'POST':
         hospitalname = form.hospitalname.data
         service_type = form.service_type.data
@@ -101,9 +102,9 @@ def Hospital_registration():
         confirm_password = form.confirm_password.data
         hospitals= Hospital.query.filter_by(email=email).first()
         if hospitals:
-            return render_template('forms/hospital.html', form=form, msg='Hospital already registered')
+            return render_template('forms/hospital_reg.html', form=form, msg='Hospital already registered')
         if password != confirm_password:
-            return render_template('forms/hospital.html', form=form, msg='Password does not match')
+            return render_template('forms/hospital_reg.html', form=form, msg='Password does not match')
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         new_hospital = Hospital(
@@ -120,7 +121,7 @@ def Hospital_registration():
 
         return redirect(url_for('login_route'))
 
-    return render_template('forms/hospital.html', form=form)
+    return render_template('forms/hospital_reg.html', form=form)
 
 @app.route('/user_registration', methods=['GET', 'POST'])
 def user_registration():
@@ -153,17 +154,17 @@ def user_registration():
     return render_template('forms/user.html', form=form)
 
 
-@app.route('/hospitals_list')
-def hospitals_list():
-    csv_file_path = 'forms/hospitals_list.csv'
+#@app.route('/hospitals_list')
+#def hospitals_list():
+ #   csv_file_path = 'forms/hospitals_list.csv'
 
     # Read the CSV file
-    with open(csv_file_path, 'r') as file:
-        csv_reader = csv.reader(file)
-        data = list(csv_reader)
+  #  with open(csv_file_path, 'r') as file:
+   #     csv_reader = csv.reader(file)
+    #    data = list(csv_reader)
 
     # Pass the data to the template for rendering
-    return render_template('hospitals_list.csv', data=data)
+    #return render_template('hospitals_list.html', data=data)
 
 #@app.route('/hospitals_list', methods=['GET', 'POST'])
 #def hospitals_list():

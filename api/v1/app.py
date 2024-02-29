@@ -83,7 +83,7 @@ def login_route():
             if user and bcrypt.check_password_hash(user.password, password):
                 # Authentication successful, redirect to dashboard or user-specific route
                 #return render_template('home.html',companies=companies,test='godfrey')
-                return redirect(url_for('home.html', hospitals=hospitals))
+                return redirect(url_for('home.html', hospitals=hospitals, test='peter'))
             else:
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
     return render_template('forms/login.html', form=form)

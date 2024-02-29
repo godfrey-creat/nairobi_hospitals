@@ -2,14 +2,13 @@
 '''Contains a Flask web application API.'''
 
 import os
-import csv
 from flask import Flask, jsonify
 from flask_cors import CORS
 
 # from api.v1.views import app_views
-from flask import Flask,render_template,redirect,url_for,request, send_file
-from forms.form import LoginForm, HospitalRegistrationForm, UserRegistrationForm
-from models.models import User, Hospital, db
+from flask import Flask,render_template,redirect,url_for,request
+from forms.form import LoginForm, HospitalRegistrationForm,UserRegistrationForm
+from models.models import User, Hospital,db
 from flask_bcrypt import bcrypt
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -17,8 +16,8 @@ from flask_login import login_user, current_user, login_required
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'Nairobi_hospitals_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nairobi_hospitals.db'  # SQLite database
+app.config['SECRET_KEY'] = 'Clean_env_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clean_env1.db'  # SQLite database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
@@ -71,8 +70,8 @@ def login_route():
             hospital = Hospital.query.filter_by(email=email).first()
             if not hospital:
                 return render_template('forms/login.html', form=form,msg='The email entered is not associate to any company')
-            if hospital and bcrypt.check_password_hash(hospital.password, password):
-                # Authentication successful, redirect to dashboard or hospital-specific route
+            if hospital and bcrypt.check_password_hash(company.password, password):
+                # Authentication successful, redirect to dashboard or company-specific route
                 return render_template('home.html',hospitals=hospitals)
             else:
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
@@ -81,9 +80,8 @@ def login_route():
             if not user:
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
             if user and bcrypt.check_password_hash(user.password, password):
-                # Authentication successful, redirect to dashboard or user-specific route
-                return render_template('home.html',companies=companies,test='godfrey')
-                #return redirect(url_for('home.html', hospitals=hospitals, test='peter'))
+                # Authentication successful, redirect to dashboard or client-specific route
+                return render_template('home.html',hospitals=hospitals,test='peter')
             else:
                 return render_template('forms/login.html', form=form,msg='Invalid credentials')
     return render_template('forms/login.html', form=form)
@@ -91,6 +89,7 @@ def login_route():
 @app.route('/Hospital_registration', methods=['GET', 'POST'])
 def Hospital_registration():
     form = HospitalRegistrationForm()
+    print('form avaailable')
     if request.method == 'POST':
         hospitalname = form.hospitalname.data
         service_type = form.service_type.data
@@ -152,11 +151,11 @@ def user_registration():
 
     return render_template('forms/user_reg.html', form=form)
 
+
 @app.route('/booking', methods=['GET', 'POST'])
 # @login_required
 def booking():
     hospitals= Hospital.query.all()
     return render_template('home.html',hospitals=hospitals)
-if __name__ == '__main__':                            app.run(debug=True)
 # if __name__ == '__main__':
 #     db.create_all()
